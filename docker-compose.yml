@@ -1,0 +1,74 @@
+# Docker окружение для тестового задания микро-CRM
+services:
+  # База данных (MariaDB совместима с MySQL)
+  db:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ocrm
+      MYSQL_USER: ocrm
+      MYSQL_PASSWORD: ocrm_secret
+      MYSQL_ROOT_PASSWORD: root_secret
+      TZ: UTC
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # PHP-FPM + Laravel backend
+  backend:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_DATABASE: ocrm
+      DB_USERNAME: ocrm
+      DB_PASSWORD: ocrm_secret
+      APP_ENV: local
+
+  # Nginx фронт-сервер для Laravel
+  web:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d:ro
+    depends_on:
+      - backend
+
+  # Node.js для Vue frontend (dev-сервер Vite)
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    restart: unless-stopped
+    command: npm run dev -- --host 0.0.0.0
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    environment:
+      NODE_ENV: development
+    ports:
+      - "5173:5173"
+    depends_on:
+      - web
+
+volumes:
+  dbdata:
+  frontend_node_modules:
