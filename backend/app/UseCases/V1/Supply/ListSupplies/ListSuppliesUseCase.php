@@ -9,8 +9,17 @@ use App\Interfaces\SupplyRepositoryInterface;
  */
 final class ListSuppliesUseCase
 {
+    /**
+     * @param SupplyRepositoryInterface $supplyRepository репозиторий поставок
+     */
     public function __construct(private SupplyRepositoryInterface $supplyRepository) {}
 
+    /**
+     * Получить список поставок.
+     *
+     * @param DataInput $input входные данные (фильтры и пагинация)
+     * @return DataOutput список поставок и метаданные пагинации
+     */
     public function execute(DataInput $input): DataOutput
     {
         $paginated = $this->supplyRepository->paginate($input->warehouseId, $input->perPage);

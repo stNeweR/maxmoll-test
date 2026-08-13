@@ -10,8 +10,17 @@ use App\Models\Product;
  */
 final class ListProductsUseCase
 {
+    /**
+     * @param ProductRepositoryInterface $productRepository репозиторий товаров
+     */
     public function __construct(private ProductRepositoryInterface $productRepository) {}
 
+    /**
+     * Получить список товаров с остатками по складам.
+     *
+     * @param DataInput $input входные данные (поиск)
+     * @return DataOutput список товаров с остатками
+     */
     public function execute(DataInput $input): DataOutput
     {
         $rows = $this->productRepository->allWithStocks($input->search)->map(function (Product $product) {

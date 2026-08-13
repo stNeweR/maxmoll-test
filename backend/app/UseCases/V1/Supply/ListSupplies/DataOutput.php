@@ -7,10 +7,16 @@ namespace App\UseCases\V1\Supply\ListSupplies;
  */
 final class DataOutput
 {
+    /**
+     * @param array $rows Строки результата.
+     * @param array $meta Метаинформация пагинации.
+     */
     public function __construct(private array $rows, private array $meta) {}
 
     /**
      * Строки результата.
+     *
+     * @return array
      */
     public function rows(): array
     {
@@ -19,6 +25,8 @@ final class DataOutput
 
     /**
      * Метаинформация пагинации.
+     *
+     * @return array
      */
     public function meta(): array
     {
@@ -27,6 +35,8 @@ final class DataOutput
 
     /**
      * Сериализует результат в тело JSON-ответа.
+     *
+     * @return array
      */
     public function toArray(): array
     {

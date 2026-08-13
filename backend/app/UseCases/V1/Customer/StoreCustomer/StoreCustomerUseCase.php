@@ -9,8 +9,17 @@ use App\Interfaces\CustomerRepositoryInterface;
  */
 final class StoreCustomerUseCase
 {
+    /**
+     * @param CustomerRepositoryInterface $customerRepository репозиторий клиентов
+     */
     public function __construct(private CustomerRepositoryInterface $customerRepository) {}
 
+    /**
+     * Создать клиента.
+     *
+     * @param DataInput $input входные данные клиента
+     * @return DataOutput созданный клиент
+     */
     public function execute(DataInput $input): DataOutput
     {
         $customer = $this->customerRepository->create([

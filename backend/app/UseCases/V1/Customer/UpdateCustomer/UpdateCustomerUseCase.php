@@ -10,8 +10,17 @@ use App\Interfaces\CustomerRepositoryInterface;
  */
 final class UpdateCustomerUseCase
 {
+    /**
+     * @param CustomerRepositoryInterface $customerRepository репозиторий клиентов
+     */
     public function __construct(private CustomerRepositoryInterface $customerRepository) {}
 
+    /**
+     * Обновить клиента.
+     *
+     * @param DataInput $input входные данные клиента
+     * @return DataOutput обновлённый клиент
+     */
     public function execute(DataInput $input): DataOutput
     {
         $customer = $this->customerRepository->find($input->id);

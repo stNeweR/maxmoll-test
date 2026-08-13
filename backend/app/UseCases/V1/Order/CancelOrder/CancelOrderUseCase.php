@@ -11,11 +11,21 @@ use App\Services\StockService;
  */
 final class CancelOrderUseCase
 {
+    /**
+     * @param OrderRepositoryInterface $orderRepository репозиторий заказов
+     * @param StockService $stockService сервис складских операций
+     */
     public function __construct(
         private OrderRepositoryInterface $orderRepository,
         private StockService $stockService,
     ) {}
 
+    /**
+     * Отменить заказ.
+     *
+     * @param int $orderId идентификатор заказа
+     * @return DataOutput данные отменённого заказа
+     */
     public function execute(int $orderId): DataOutput
     {
         $order = $this->orderRepository->find($orderId);

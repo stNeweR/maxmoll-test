@@ -11,11 +11,21 @@ use App\Services\StockService;
  */
 final class UpdateOrderUseCase
 {
+    /**
+     * @param OrderRepositoryInterface $orderRepository репозиторий заказов
+     * @param StockService $stockService сервис складских операций
+     */
     public function __construct(
         private OrderRepositoryInterface $orderRepository,
         private StockService $stockService,
     ) {}
 
+    /**
+     * Обновить заказ.
+     *
+     * @param DataInput $input входные данные заказа
+     * @return DataOutput обновлённый заказ
+     */
     public function execute(DataInput $input): DataOutput
     {
         $order = $this->orderRepository->find($input->id);

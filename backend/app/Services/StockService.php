@@ -31,6 +31,16 @@ use Illuminate\Support\Facades\DB;
  */
 class StockService
 {
+    /**
+     * Инъекция зависимостей сервиса.
+     *
+     * @param  OrderRepositoryInterface  $orderRepository  репозиторий заказов
+     * @param  SupplyRepositoryInterface  $supplyRepository  репозиторий поставок
+     * @param  TransferRepositoryInterface  $transferRepository  репозиторий перемещений
+     * @param  StockRepositoryInterface  $stockRepository  репозиторий остатков
+     * @param  MovementRepositoryInterface  $movementRepository  репозиторий движений
+     * @param  ProductRepositoryInterface  $productRepository  репозиторий товаров
+     */
     public function __construct(
         private OrderRepositoryInterface $orderRepository,
         private SupplyRepositoryInterface $supplyRepository,

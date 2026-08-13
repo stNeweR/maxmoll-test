@@ -9,8 +9,17 @@ use App\Interfaces\OrderRepositoryInterface;
  */
 final class ListOrdersUseCase
 {
+    /**
+     * @param OrderRepositoryInterface $orderRepository репозиторий заказов
+     */
     public function __construct(private OrderRepositoryInterface $orderRepository) {}
 
+    /**
+     * Получить список заказов.
+     *
+     * @param DataInput $input входные данные (фильтры и пагинация)
+     * @return DataOutput список заказов и метаданные пагинации
+     */
     public function execute(DataInput $input): DataOutput
     {
         $paginated = $this->orderRepository->paginate($input->status, $input->customerId, $input->warehouseId, $input->perPage);

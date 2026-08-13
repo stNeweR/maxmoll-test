@@ -7,6 +7,14 @@ namespace App\UseCases\V1\Order\ListOrders;
  */
 final class DataInput
 {
+    /**
+     * Конструктор DTO списка заказов.
+     *
+     * @param ?string $status     Фильтр по статусу заказа.
+     * @param ?int $customerId    Идентификатор клиента.
+     * @param ?int $warehouseId   Идентификатор склада.
+     * @param int $perPage        Количество записей на страницу.
+     */
     public function __construct(
         public ?string $status,
         public ?int $customerId,
@@ -14,6 +22,12 @@ final class DataInput
         public int $perPage,
     ) {}
 
+    /**
+     * Создаёт DTO из массива входных данных.
+     *
+     * @param array $data Массив входных данных.
+     * @return self
+     */
     public static function create(array $data): self
     {
         return new self(

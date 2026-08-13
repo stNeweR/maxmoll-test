@@ -11,11 +11,21 @@ use App\Services\StockService;
  */
 final class CancelTransferUseCase
 {
+    /**
+     * @param TransferRepositoryInterface $transferRepository репозиторий перемещений
+     * @param StockService $stockService сервис складских операций
+     */
     public function __construct(
         private TransferRepositoryInterface $transferRepository,
         private StockService $stockService,
     ) {}
 
+    /**
+     * Отменить перемещение.
+     *
+     * @param int $transferId идентификатор перемещения
+     * @return DataOutput данные отменённого перемещения
+     */
     public function execute(int $transferId): DataOutput
     {
         $transfer = $this->transferRepository->find($transferId);

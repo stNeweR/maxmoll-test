@@ -9,8 +9,17 @@ use App\Interfaces\TransferRepositoryInterface;
  */
 final class ListTransfersUseCase
 {
+    /**
+     * @param TransferRepositoryInterface $transferRepository репозиторий перемещений
+     */
     public function __construct(private TransferRepositoryInterface $transferRepository) {}
 
+    /**
+     * Получить список перемещений.
+     *
+     * @param DataInput $input входные данные (фильтры и пагинация)
+     * @return DataOutput список перемещений и метаданные пагинации
+     */
     public function execute(DataInput $input): DataOutput
     {
         $paginated = $this->transferRepository->paginate($input->status, $input->perPage);

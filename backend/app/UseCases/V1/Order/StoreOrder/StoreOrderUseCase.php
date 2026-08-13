@@ -10,8 +10,17 @@ use App\Services\StockService;
  */
 final class StoreOrderUseCase
 {
+    /**
+     * @param StockService $stockService сервис складских операций
+     */
     public function __construct(private StockService $stockService) {}
 
+    /**
+     * Создать заказ.
+     *
+     * @param DataInput $input входные данные заказа
+     * @return DataOutput созданный заказ
+     */
     public function execute(DataInput $input): DataOutput
     {
         $order = $this->stockService->createOrder($input->toServicePayload());

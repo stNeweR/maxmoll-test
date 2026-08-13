@@ -9,8 +9,17 @@ use App\Interfaces\MovementRepositoryInterface;
  */
 final class ListMovementsUseCase
 {
+    /**
+     * @param MovementRepositoryInterface $movementRepository репозиторий движений
+     */
     public function __construct(private MovementRepositoryInterface $movementRepository) {}
 
+    /**
+     * Получить историю движений товаров.
+     *
+     * @param DataInput $input входные данные (фильтры и пагинация)
+     * @return DataOutput список движений и метаданные пагинации
+     */
     public function execute(DataInput $input): DataOutput
     {
         $paginated = $this->movementRepository->paginate(

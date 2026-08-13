@@ -11,11 +11,21 @@ use App\Services\StockService;
  */
 final class CompleteOrderUseCase
 {
+    /**
+     * @param OrderRepositoryInterface $orderRepository репозиторий заказов
+     * @param StockService $stockService сервис складских операций
+     */
     public function __construct(
         private OrderRepositoryInterface $orderRepository,
         private StockService $stockService,
     ) {}
 
+    /**
+     * Завершить заказ.
+     *
+     * @param int $orderId идентификатор заказа
+     * @return DataOutput данные завершённого заказа
+     */
     public function execute(int $orderId): DataOutput
     {
         $order = $this->orderRepository->find($orderId);

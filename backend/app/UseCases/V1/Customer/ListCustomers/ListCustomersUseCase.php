@@ -9,8 +9,17 @@ use App\Interfaces\CustomerRepositoryInterface;
  */
 final class ListCustomersUseCase
 {
+    /**
+     * @param CustomerRepositoryInterface $customerRepository репозиторий клиентов
+     */
     public function __construct(private CustomerRepositoryInterface $customerRepository) {}
 
+    /**
+     * Получить список клиентов.
+     *
+     * @param DataInput $input входные данные (фильтры и пагинация)
+     * @return DataOutput список клиентов и метаданные пагинации
+     */
     public function execute(DataInput $input): DataOutput
     {
         $paginated = $this->customerRepository->paginate($input->search, $input->email, $input->phone, $input->perPage);

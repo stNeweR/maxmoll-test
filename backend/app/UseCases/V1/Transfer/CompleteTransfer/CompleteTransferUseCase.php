@@ -11,11 +11,21 @@ use App\Services\StockService;
  */
 final class CompleteTransferUseCase
 {
+    /**
+     * @param TransferRepositoryInterface $transferRepository репозиторий перемещений
+     * @param StockService $stockService сервис складских операций
+     */
     public function __construct(
         private TransferRepositoryInterface $transferRepository,
         private StockService $stockService,
     ) {}
 
+    /**
+     * Завершить перемещение.
+     *
+     * @param int $transferId идентификатор перемещения
+     * @return DataOutput данные завершённого перемещения
+     */
     public function execute(int $transferId): DataOutput
     {
         $transfer = $this->transferRepository->find($transferId);

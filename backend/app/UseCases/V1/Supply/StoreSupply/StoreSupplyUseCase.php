@@ -10,8 +10,17 @@ use App\Services\StockService;
  */
 final class StoreSupplyUseCase
 {
+    /**
+     * @param StockService $stockService сервис складских операций
+     */
     public function __construct(private StockService $stockService) {}
 
+    /**
+     * Создать поставку.
+     *
+     * @param DataInput $input входные данные поставки
+     * @return DataOutput созданная поставка
+     */
     public function execute(DataInput $input): DataOutput
     {
         $supply = $this->stockService->createSupply($input->toServicePayload());

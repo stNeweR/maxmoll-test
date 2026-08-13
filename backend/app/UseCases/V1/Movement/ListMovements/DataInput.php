@@ -7,6 +7,16 @@ namespace App\UseCases\V1\Movement\ListMovements;
  */
 final class DataInput
 {
+    /**
+     * Конструктор DTO истории движений товаров.
+     *
+     * @param ?int $warehouseId Идентификатор склада.
+     * @param ?int $productId   Идентификатор товара.
+     * @param ?string $docType  Тип документа.
+     * @param ?string $dateFrom Начало периода.
+     * @param ?string $dateTo   Конец периода.
+     * @param int $perPage      Количество записей на страницу.
+     */
     public function __construct(
         public ?int $warehouseId,
         public ?int $productId,
@@ -16,6 +26,12 @@ final class DataInput
         public int $perPage,
     ) {}
 
+    /**
+     * Создаёт DTO из массива входных данных.
+     *
+     * @param array $data Массив входных данных.
+     * @return self
+     */
     public static function create(array $data): self
     {
         return new self(

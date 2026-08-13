@@ -10,8 +10,17 @@ use App\Interfaces\OrderRepositoryInterface;
  */
 final class ShowOrderUseCase
 {
+    /**
+     * @param OrderRepositoryInterface $orderRepository репозиторий заказов
+     */
     public function __construct(private OrderRepositoryInterface $orderRepository) {}
 
+    /**
+     * Просмотреть один заказ.
+     *
+     * @param int $orderId идентификатор заказа
+     * @return DataOutput данные заказа
+     */
     public function execute(int $orderId): DataOutput
     {
         $order = $this->orderRepository->findWithRelations($orderId);

@@ -9,10 +9,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class DataOutput
 {
+    /**
+     * @param Model $model Модель результата.
+     */
     public function __construct(private Model $model) {}
 
     /**
      * Сериализует модель (с загруженными связями) в тело JSON-ответа.
+     *
+     * @return array
      */
     public function toArray(): array
     {
